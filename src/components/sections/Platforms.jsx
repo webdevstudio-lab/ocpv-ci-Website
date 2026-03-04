@@ -1,3 +1,4 @@
+"use client";
 const platforms = [
   {
     img: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=700&q=80",

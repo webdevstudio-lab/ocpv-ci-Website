@@ -1,4 +1,4 @@
-// src/components/sections/ServicesGrid.jsx
+"use client";
 const OCPV_SERVICES = [
   {
     title: "Collecte & Transport",

@@ -1,4 +1,4 @@
-// src/components/sections/StatsCounter.jsx
+"use client";
 export default function StatsCounter() {
   return (
     <section className="bg-slate-900 text-white">

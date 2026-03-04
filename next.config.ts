@@ -19,7 +19,7 @@ const nextConfig: NextConfig = {
   },
 
   // 3. Optionnel : assure que les liens se terminent par un slash (évite des 404 sur certains serveurs)
-  trailingSlash: true,
+  trailingSlash: false,
 };
 
 export default nextConfig;

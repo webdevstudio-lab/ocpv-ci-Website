@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-/* ── Hook animation compteur ── */
 function useCounter(target, duration = 1800, started = false) {
   const [count, setCount] = useState(0);
   useEffect(() => {
@@ -20,7 +19,6 @@ function useCounter(target, duration = 1800, started = false) {
   return count;
 }
 
-/* ── Stat principale (carte orange) ── */
 function MainStat({ started }) {
   const count = useCounter(97, 1600, started);
   return (
@@ -37,7 +35,6 @@ function MainStat({ started }) {
         minHeight: 220,
       }}
     >
-      {/* Icone déco fond */}
       <div
         style={{ position: "absolute", right: -10, bottom: -10, opacity: 0.12 }}
       >
@@ -96,7 +93,6 @@ function MainStat({ started }) {
   );
 }
 
-/* ── Stat secondaire (fond vert sombre) ── */
 function StatItem({ icon, value, suffix, label, started, duration }) {
   const count = useCounter(value, duration, started);
   return (
@@ -110,11 +106,9 @@ function StatItem({ icon, value, suffix, label, started, duration }) {
         gap: 12,
       }}
     >
-      {/* Icone */}
       <div style={{ color: "rgba(255,255,255,0.55)", marginBottom: 4 }}>
         {icon}
       </div>
-      {/* Valeur */}
       <p
         style={{
           fontFamily: "'Barlow Condensed',sans-serif",
@@ -128,7 +122,6 @@ function StatItem({ icon, value, suffix, label, started, duration }) {
         {count}
         {suffix}
       </p>
-      {/* Label */}
       <p
         style={{
           fontFamily: "'Barlow Condensed',sans-serif",
@@ -270,7 +263,6 @@ export default function Features() {
   const [started, setStarted] = useState(false);
   const ref = useRef(null);
 
-  /* Déclenche l'animation quand la section devient visible */
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -287,17 +279,6 @@ export default function Features() {
 
   return (
     <>
-      <style>{`
-        .stat-card-wrap:last-child > div { border-right: none !important; }
-        @media (max-width: 768px) {
-          .stats-grid { grid-template-columns: 1fr !important; }
-          .secondary-stats { grid-template-columns: 1fr 1fr !important; }
-        }
-        @media (max-width: 480px) {
-          .secondary-stats { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
-
       {/* ── SECTION STATS ── */}
       <section
         ref={ref}
@@ -314,10 +295,7 @@ export default function Features() {
               boxShadow: "0 16px 48px rgba(0,0,0,0.12)",
             }}
           >
-            {/* Carte orange principale */}
             <MainStat started={started} />
-
-            {/* 3 stats secondaires sur fond vert sombre */}
             <div
               className="secondary-stats"
               style={{
@@ -326,7 +304,7 @@ export default function Features() {
                 gridTemplateColumns: "1fr 1fr 1fr",
               }}
             >
-              {secondaryStats.map((s, i) => (
+              {secondaryStats.map((s) => (
                 <div key={s.label} className="stat-card-wrap">
                   <StatItem {...s} started={started} />
                 </div>
@@ -339,7 +317,9 @@ export default function Features() {
       {/* ── SECTION 3 CARDS SERVICES ── */}
       <section style={{ background: "#f8f9fa", padding: "0 24px 90px" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: 48 }}>
+          <div
+            style={{ textAlign: "center", marginBottom: 48, paddingTop: 60 }}
+          >
             <span
               style={{
                 fontFamily: "'Barlow Condensed',sans-serif",
@@ -365,6 +345,7 @@ export default function Features() {
               Des services fiables pour le vivrier ivoirien
             </h2>
           </div>
+
           <div
             style={{
               display: "grid",

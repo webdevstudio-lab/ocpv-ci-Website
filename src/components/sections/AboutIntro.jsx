@@ -19,110 +19,6 @@ export default function AboutIntro() {
 
   return (
     <>
-      <style>{`
-        /* ── Modal vidéo ── */
-        .video-modal-overlay {
-          position: fixed; inset: 0; z-index: 9999;
-          background: rgba(0,0,0,0.85);
-          display: flex; align-items: center; justify-content: center;
-          padding: 24px;
-          animation: fadeIn 0.25s ease;
-        }
-        @keyframes fadeIn { from { opacity:0 } to { opacity:1 } }
-
-        .video-modal-box {
-          position: relative;
-          width: 100%; max-width: 900px;
-          background: #000;
-          border-radius: 10px;
-          overflow: hidden;
-          box-shadow: 0 24px 80px rgba(0,0,0,0.6);
-          animation: scaleIn 0.25s ease;
-        }
-        @keyframes scaleIn { from { transform:scale(0.93); opacity:0 } to { transform:scale(1); opacity:1 } }
-
-        .video-modal-close {
-          position: absolute; top: 12px; right: 12px; z-index: 10;
-          width: 38px; height: 38px; border-radius: 6px;
-          background: #f97316; border: none; cursor: pointer;
-          display: flex; align-items: center; justify-content: center;
-          transition: background 0.2s;
-        }
-        .video-modal-close:hover { background: #ea6c0a; }
-
-        .video-modal-minimize {
-          position: absolute; top: 12px; right: 58px; z-index: 10;
-          width: 38px; height: 38px; border-radius: 6px;
-          background: rgba(255,255,255,0.15); border: none; cursor: pointer;
-          display: flex; align-items: center; justify-content: center;
-          transition: background 0.2s;
-        }
-        .video-modal-minimize:hover { background: rgba(255,255,255,0.25); }
-
-        /* Miniature flottante */
-        .video-pip {
-          position: fixed; bottom: 90px; right: 28px; z-index: 9998;
-          width: 280px;
-          background: #000;
-          border-radius: 8px;
-          overflow: hidden;
-          box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-          border: 2px solid #f97316;
-          animation: slideUp 0.3s ease;
-        }
-        @keyframes slideUp { from { transform:translateY(20px); opacity:0 } to { transform:translateY(0); opacity:1 } }
-        .video-pip-bar {
-          background: #1a1a1a;
-          padding: 6px 10px;
-          display: flex; align-items: center; justify-content: space-between;
-        }
-        .video-pip-bar span {
-          font-family: 'Barlow Condensed', sans-serif;
-          font-size: 11px; font-weight: 700; text-transform: uppercase;
-          color: rgba(255,255,255,0.6); letter-spacing: 0.5px;
-        }
-        .pip-btn {
-          background: none; border: none; cursor: pointer;
-          display: flex; align-items: center; justify-content: center;
-          padding: 3px; color: rgba(255,255,255,0.6);
-          transition: color 0.2s;
-        }
-        .pip-btn:hover { color: #f97316; }
-
-        /* Mission item */
-        .mission-item {
-          display: flex; align-items: flex-start; gap: 12px;
-          padding: 10px 0;
-          border-bottom: 1px solid rgba(26,92,42,0.08);
-          font-family: 'Barlow', sans-serif;
-          font-size: 13px; color: #374151; line-height: 1.65;
-        }
-        .mission-item:last-child { border-bottom: none; }
-
-        .play-btn {
-          position: absolute; top: 50%; left: 50%;
-          transform: translate(-50%, -50%);
-          width: 60px; height: 60px; border-radius: 50%;
-          background: #f97316; border: none; cursor: pointer;
-          display: flex; align-items: center; justify-content: center;
-          box-shadow: 0 0 0 14px rgba(249,115,22,0.2);
-          transition: background 0.2s, transform 0.2s;
-        }
-        .play-btn:hover { background: #ea6c0a; transform: translate(-50%, -50%) scale(1.08); }
-
-        .dg-name-band {
-          background: #1a5c2a; color: #fff;
-          text-align: center; padding: 14px 16px;
-          border-radius: 0 0 8px 8px;
-        }
-
-        @media (max-width: 900px) {
-          .about-dg-grid { grid-template-columns: 1fr !important; }
-          .about-missions-grid { grid-template-columns: 1fr !important; }
-          .video-pip { width: 220px; bottom: 80px; right: 16px; }
-        }
-      `}</style>
-
       {/* ══════════ MODAL VIDÉO ══════════ */}
       {videoOpen === "full" && (
         <div
@@ -130,7 +26,6 @@ export default function AboutIntro() {
           onClick={(e) => e.target === e.currentTarget && setVideoOpen(false)}
         >
           <div className="video-modal-box">
-            {/* Bouton minimiser */}
             <button
               className="video-modal-minimize"
               onClick={() => setVideoOpen("pip")}
@@ -147,7 +42,6 @@ export default function AboutIntro() {
                 <path d="M8 3H5a2 2 0 00-2 2v3M21 8V5a2 2 0 00-2-2h-3M3 16v3a2 2 0 002 2h3M16 21h3a2 2 0 002-2v-3" />
               </svg>
             </button>
-            {/* Bouton fermer */}
             <button
               className="video-modal-close"
               onClick={() => setVideoOpen(false)}
@@ -164,7 +58,6 @@ export default function AboutIntro() {
                 <path d="M18 6L6 18M6 6l12 12" />
               </svg>
             </button>
-            {/* iFrame YouTube */}
             <div
               style={{
                 position: "relative",
@@ -190,7 +83,7 @@ export default function AboutIntro() {
         </div>
       )}
 
-      {/* ══════════ PIP (miniature flottante) ══════════ */}
+      {/* ══════════ PIP ══════════ */}
       {videoOpen === "pip" && (
         <div className="video-pip">
           <div className="video-pip-bar">
@@ -261,7 +154,7 @@ export default function AboutIntro() {
         }}
       >
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          {/* Label + titre section */}
+          {/* Label + titre */}
           <div style={{ marginBottom: 56, textAlign: "center" }}>
             <span
               style={{
@@ -292,7 +185,7 @@ export default function AboutIntro() {
             </h2>
           </div>
 
-          {/* ── BLOC 1 : Photo DG + texte présentation ── */}
+          {/* ── BLOC 1 : Photo DG + texte ── */}
           <div
             className="about-dg-grid"
             style={{
@@ -333,7 +226,6 @@ export default function AboutIntro() {
                   }}
                 />
               </div>
-              {/* Bandeau nom */}
               <div
                 className="dg-name-band"
                 style={{ width: "100%", maxWidth: 360 }}
@@ -365,7 +257,6 @@ export default function AboutIntro() {
 
             {/* Texte officiel */}
             <div>
-              {/* Drapeau déco */}
               <div
                 style={{
                   width: 48,
@@ -375,7 +266,6 @@ export default function AboutIntro() {
                   marginBottom: 20,
                 }}
               />
-
               <p
                 style={{
                   fontFamily: "'Barlow',sans-serif",
@@ -431,7 +321,6 @@ export default function AboutIntro() {
                 commercialisation des produits vivriers.
               </p>
 
-              {/* Boutons */}
               <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
                 <Link
                   href="#"
@@ -573,7 +462,7 @@ export default function AboutIntro() {
                 </div>
               </div>
 
-              {/* Vidéo thumbnail cliquable */}
+              {/* Vidéo thumbnail */}
               <div>
                 <span
                   style={{
@@ -599,7 +488,6 @@ export default function AboutIntro() {
                     boxShadow: "0 8px 32px rgba(0,0,0,0.15)",
                   }}
                 >
-                  {/* Thumbnail YouTube */}
                   <img
                     src="https://img.youtube.com/vi/Yqae_kPdGGk/maxresdefault.jpg"
                     alt="Vidéo de présentation OCPV"
@@ -614,22 +502,18 @@ export default function AboutIntro() {
                         "https://img.youtube.com/vi/Yqae_kPdGGk/hqdefault.jpg";
                     }}
                   />
-                  {/* Overlay sombre */}
                   <div
                     style={{
                       position: "absolute",
                       inset: 0,
                       background: "rgba(13,53,24,0.45)",
-                      transition: "background 0.2s",
                     }}
                   />
-                  {/* Bouton play */}
                   <button className="play-btn">
                     <svg width="22" height="22" fill="#fff" viewBox="0 0 24 24">
                       <polygon points="5,3 19,12 5,21" />
                     </svg>
                   </button>
-                  {/* Label bas */}
                   <div
                     style={{
                       position: "absolute",

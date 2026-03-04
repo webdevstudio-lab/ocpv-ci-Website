@@ -24,12 +24,22 @@ const navLinks = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [expanded, setExpanded] = useState(null);
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", fn);
     return () => window.removeEventListener("scroll", fn);
   }, []);
+
+  const closeMenu = () => {
+    setOpen(false);
+    setExpanded(null);
+  };
+
+  const toggleExpanded = (label) => {
+    setExpanded(expanded === label ? null : label);
+  };
 
   return (
     <>
@@ -83,7 +93,6 @@ export default function Navbar() {
         .nav-dropdown {
           display: none;
           position: absolute;
-          /* Suppression du gap : le dropdown colle directement au nav */
           top: 100%;
           left: 0;
           background: #fff;
@@ -95,12 +104,6 @@ export default function Navbar() {
         }
         .nav-group:hover .nav-dropdown { display: block; }
         .nav-group:hover .nav-dropdown-btn { color: #f97316; }
-
-        .nav-dropdown ul {
-          list-style: none;
-          margin: 0;
-          padding: 6px 0;
-        }
 
         .nav-dropdown a {
           font-family: 'Barlow', sans-serif;
@@ -192,6 +195,11 @@ export default function Navbar() {
           letter-spacing: 0.5px;
         }
 
+        /* ── Mobile ── */
+        .mobile-link-container {
+          border-bottom: 1px solid #f3f4f6;
+        }
+
         .mobile-link {
           font-family: 'Barlow Condensed', sans-serif;
           font-weight: 700;
@@ -200,12 +208,37 @@ export default function Navbar() {
           letter-spacing: 0.5px;
           color: #1a1a1a;
           text-decoration: none;
-          display: block;
-          padding: 13px 0;
-          border-bottom: 1px solid #f3f4f6;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 14px 0;
+          width: 100%;
+          background: none;
+          border: none;
+          cursor: pointer;
           transition: color 0.2s;
         }
         .mobile-link:hover { color: #f97316; }
+
+        .mobile-sublink {
+          font-family: 'Barlow', sans-serif;
+          display: block;
+          padding: 11px 20px;
+          color: #4b5563;
+          text-decoration: none;
+          font-size: 13px;
+          font-weight: 500;
+          border-bottom: 1px solid #eee;
+          transition: color 0.15s, background 0.15s;
+        }
+        .mobile-sublink:hover {
+          color: #f97316;
+          background: #fff7f0;
+        }
+        .mobile-sublink:last-child { border-bottom: none; }
+
+        .chevron { transition: transform 0.25s; }
+        .chevron.rotated { transform: rotate(180deg); }
 
         .burger-btn {
           display: none;
@@ -219,6 +252,9 @@ export default function Navbar() {
         @media (max-width: 960px) {
           .desktop-nav { display: none !important; }
           .burger-btn { display: flex !important; }
+        }
+        @media (max-width: 640px) {
+          .topbar-address { display: none !important; }
         }
       `}</style>
 
@@ -251,7 +287,7 @@ export default function Navbar() {
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-              <span className="topbar-text">
+              <span className="topbar-text topbar-address">
                 <svg
                   width="13"
                   height="13"
@@ -265,7 +301,7 @@ export default function Navbar() {
                 </svg>
                 ABOBO PK 18, Route d'Anyama, Carrefour AGRIPAC – Abidjan
               </span>
-              <span className="topbar-text" style={{ display: "flex" }}>
+              <span className="topbar-text">
                 <svg
                   width="13"
                   height="13"
@@ -280,7 +316,7 @@ export default function Navbar() {
                 info@ocpv-ci.com
               </span>
             </div>
-            <a href="tel:+22527243918 74" className="topbar-contact">
+            <a href="tel:+22527243918" className="topbar-contact">
               <svg
                 width="13"
                 height="13"
@@ -349,7 +385,7 @@ export default function Navbar() {
             </div>
           </Link>
 
-          {/* Links desktop */}
+          {/* ── Desktop Nav ── */}
           <ul
             className="desktop-nav"
             style={{
@@ -454,31 +490,82 @@ export default function Navbar() {
           </div>
         </nav>
 
-        {/* ── Menu mobile ── */}
+        {/* ── Menu Mobile avec accordéon ── */}
         {open && (
           <div
             style={{
               background: "#fff",
               borderTop: "3px solid #f97316",
-              padding: "8px 32px 24px",
+              padding: "0 32px 24px",
+              maxHeight: "80vh",
+              overflowY: "auto",
             }}
           >
             {navLinks.map((link) => (
-              <Link
-                key={link.label}
-                href={link.href}
-                className="mobile-link"
-                onClick={() => setOpen(false)}
-              >
-                {link.label}
-              </Link>
+              <div key={link.label} className="mobile-link-container">
+                {link.children ? (
+                  <>
+                    {/* Bouton accordéon */}
+                    <button
+                      className="mobile-link"
+                      onClick={() => toggleExpanded(link.label)}
+                    >
+                      {link.label}
+                      <svg
+                        className={`chevron${expanded === link.label ? " rotated" : ""}`}
+                        width="16"
+                        height="16"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M6 9l6 6 6-6" />
+                      </svg>
+                    </button>
+                    {/* Sous-menu animé */}
+                    <div
+                      style={{
+                        maxHeight: expanded === link.label ? "500px" : "0",
+                        overflow: "hidden",
+                        transition: "max-height 0.3s ease-in-out",
+                        background: "#f9fafb",
+                        borderRadius: "0 0 6px 6px",
+                      }}
+                    >
+                      {link.children.map((child) => (
+                        <Link
+                          key={child.label}
+                          href={child.href}
+                          className="mobile-sublink"
+                          onClick={closeMenu}
+                        >
+                          <span style={{ color: "#f97316", marginRight: 8 }}>
+                            ›
+                          </span>
+                          {child.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <Link
+                    href={link.href}
+                    className="mobile-link"
+                    onClick={closeMenu}
+                  >
+                    {link.label}
+                  </Link>
+                )}
+              </div>
             ))}
+
             <Link
               href="/#contact"
-              onClick={() => setOpen(false)}
+              onClick={closeMenu}
               style={{
                 display: "block",
-                marginTop: 16,
+                marginTop: 20,
                 fontFamily: "'Barlow Condensed', sans-serif",
                 fontWeight: 800,
                 fontSize: 15,
