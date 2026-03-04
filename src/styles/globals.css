@@ -1,0 +1,52 @@
+/* ── Tailwind v4 : une seule ligne suffit ── */
+@import "tailwindcss";
+
+/* ── Variables de thème OCPV ── */
+@theme {
+  --color-green-dark: #0d3518;
+  --color-green-main: #1a5c2a;
+  --color-green-light: #2d7a40;
+  --color-orange: #f97316;
+  --color-orange-dark: #ea6c0a;
+}
+
+/* ── Animation ticker ── */
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-200%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
+:root {
+  --green-dark: #0d3518;
+  --green-main: #1a5c2a;
+  --green-light: #2d7a40;
+  --orange: #f97316;
+  --orange-dark: #ea6c0a;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer utilities {
+  .animate-marquee {
+    animation: marquee 40s linear infinite;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-200%);
+  }
+}

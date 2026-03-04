@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+/* ── Variables globales ── */
+:root {
+  --green-dark: #0d3518;
+  --green-main: #1a5c2a;
+  --green-light: #2d7a40;
+  --orange: #f97316;
+  --orange-dark: #ea6c0a;
+}
+
+/* ── Reset de base ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  padding: 0;
+}
+img {
+  max-width: 100%;
+  display: block;
+}
+a {
+  text-decoration: none;
+}
+button {
+  font-family: inherit;
+}
+
+/* ── Polices globales ── */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-barlow-condensed), "Barlow Condensed", sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.3px;
+  line-height: 1.1;
+  margin: 0;
+}
+
+p,
+span,
+li,
+a,
+input,
+textarea,
+button,
+label {
+  font-family: var(--font-barlow), "Barlow", sans-serif;
+}
